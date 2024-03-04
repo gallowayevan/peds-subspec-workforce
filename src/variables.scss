@@ -1,0 +1,16 @@
+/* Variables and mixins declared here will be available in all other SCSS files */ /* https://github.com/jgthms/bulma/issues/1293 */
+$body-overflow-y: auto;
+
+$primary: #566872;
+$info: #6a8a22 ;
+$success: #cbdb2a;
+$warning: #a52671;
+$grey-lighter: rgb(223,223,223);
+
+
+$label-weight: 600;
+
+// $tablet: 801px;
+$navbar-breakpoint: 768px;
+
+// $custom-colors: ("secondary": #D9E8FF, "yellowish": #FFD98C);

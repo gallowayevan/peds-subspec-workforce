@@ -1,0 +1,48 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	export let groupLabel = 'Button Radio Group';
+	export let options = undefined;
+	export let selected = undefined;
+
+	function tabClicked(e) {
+		if (selected != e.target.id) {
+			dispatch('changeSelected', e.target.id);
+		}
+	}
+
+	function tabKeydown(e) {
+		if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+			const currentIndex = +e.target.getAttribute('data-index');
+			const moveIndex = e.key === 'ArrowLeft' ? -1 : 1;
+			let newIndex = currentIndex + moveIndex;
+
+			if (newIndex >= options.length) {
+				//If newIndex is too far right, circle to front
+				newIndex = 0;
+			} else if (newIndex < 0) {
+				//If newIndex is too far left, circle to end
+				newIndex = options.length - 1;
+			}
+			document.getElementById(options[newIndex].value).focus();
+			dispatch('changeSelected', options[newIndex].value);
+		}
+	}
+</script>
+
+<div class="buttons has-addons" role="radiogroup" aria-label={groupLabel}>
+	{#each options as { value, label }, index}
+		<button
+			id={value}
+			role="radio"
+			data-index={index}
+			aria-checked={selected == value}
+			tabindex={selected === value ? 0 : -1}
+			class={selected === value ? 'button is-selected is-primary' : 'button'}
+			on:click={tabClicked}
+			on:keydown={tabKeydown}>{label}</button
+		>
+	{/each}
+</div>
